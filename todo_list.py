@@ -11,10 +11,10 @@ def main():
     while True:
         _ = False
         command = input("")
-        if match := re.search(r"add todo:(.*)", command):
+        if match := re.search(r"^add todo:(.*)$", command):
             todos.append({"TODO": match.group(1), "Completed": False})
             write_to_csv()
-        elif match := re.search(r"remove todo:(.*)", command):
+        elif match := re.search(r"^remove todo:(.*)$", command):
             try:
                 todos.remove({"TODO": match.group(1), "Completed": False})
                 write_to_csv()
@@ -33,7 +33,7 @@ def main():
                 )
             except FileNotFoundError:
                 print("No todos created.")
-        elif match := re.search(r"(.*) completed", command):
+        elif match := re.search(r"^(.*) completed$", command):
             for dict in todos:
                 if match.group(1) == dict["TODO"]:
                     dict["Completed"] = True
